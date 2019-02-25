@@ -1,8 +1,8 @@
 package main
 
 import (
-	"cd-email/email"
-	"cd-email/server"
+	"github.com/kadhonn/cd-email/email"
+	"github.com/kadhonn/cd-email/server"
 )
 
 func main() {

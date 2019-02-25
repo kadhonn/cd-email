@@ -2,8 +2,8 @@ package server
 
 import (
 	"bytes"
-	"cd-email/email"
 	"errors"
+	"github.com/kadhonn/cd-email/email"
 	"log"
 	"mime/multipart"
 	"net/http"
