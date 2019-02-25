@@ -33,7 +33,6 @@ func copyFunc(content []byte) func(writer io.Writer) error {
 	}
 }
 
-//TODO properties
-func NewSender() *Sender {
-	return &Sender{dialer: gomail.NewDialer("mail.gmx.net", 465, "ableimat@gmx.at", "Mt6w1zUYdUvBGje9pflm")}
+func NewSender(host string, username string, password string) *Sender {
+	return &Sender{dialer: gomail.NewDialer(host, 465, username, password)}
 }
