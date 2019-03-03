@@ -12,13 +12,13 @@ import (
 var sender *email.Sender
 var password string
 
-func Run(givenSender *email.Sender, givenPassword string) {
+func Run(listenAddress string, givenSender *email.Sender, givenPassword string) {
 	sender = givenSender
 	password = givenPassword
 	http.HandleFunc("/", renderSiteHandler)
 	http.HandleFunc("/favicon.ico", faviconHandler)
 	http.HandleFunc("/submit/", submitHandler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(listenAddress, nil))
 }
 
 func renderSiteHandler(w http.ResponseWriter, r *http.Request) {

@@ -9,10 +9,13 @@ import (
 )
 
 var (
-	password     = flag.String("password", "", "the password needed in the ui")
-	smtpHost     = flag.String("smtpHost", "", "the smtpHost needed to send emails")
-	smtpUser     = flag.String("smtpUser", "", "the smtpUser needed to send emails")
-	smtpPassword = flag.String("smtpPassword", "", "the smtpPassword needed to send emails")
+	password      = flag.String("password", "", "the password needed in the ui")
+	smtpHost      = flag.String("smtpHost", "", "the smtpHost needed to send emails")
+	smtpPort      = flag.Int("smtpPort", 587, "the smtpPort needed to send emails")
+	smtpUser      = flag.String("smtpUser", "", "the smtpUser needed to send emails")
+	smtpPassword  = flag.String("smtpPassword", "", "the smtpPassword needed to send emails")
+	smtpFrom      = flag.String("smtpFrom", "", "the smtpFrom needed to send emails. defaults to smtpUser")
+	listenAddress = flag.String("listenAddress", "localhost:8080", "address to listen to")
 )
 
 func main() {
@@ -22,7 +25,7 @@ func main() {
 
 	checkValues()
 
-	server.Run(email.NewSender(*smtpHost, *smtpUser, *smtpPassword), *password)
+	server.Run(*listenAddress, email.NewSender(*smtpHost, *smtpPort, *smtpUser, *smtpPassword, *smtpFrom), *password)
 }
 
 func checkValues() {
@@ -37,5 +40,8 @@ func checkValues() {
 	}
 	if *smtpPassword == "" {
 		log.Fatal("needs a smtpPassword set")
+	}
+	if *smtpFrom == "" {
+		*smtpFrom = *smtpUser
 	}
 }

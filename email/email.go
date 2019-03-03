@@ -12,12 +12,13 @@ type Email struct {
 }
 
 type Sender struct {
+	from   string
 	dialer *gomail.Dialer
 }
 
 func (sender *Sender) Send(email Email) error {
 	m := gomail.NewMessage()
-	m.SetHeader("From", "ableimat@gmx.at")
+	m.SetHeader("From", sender.from)
 	m.SetHeader("To", email.Address)
 	m.SetHeader("Subject", "File from Coderdojo Linz")
 	m.SetBody("text/plain", "Hello! Here is you file, have fun coding! :)")
@@ -33,6 +34,6 @@ func copyFunc(content []byte) func(writer io.Writer) error {
 	}
 }
 
-func NewSender(host string, username string, password string) *Sender {
-	return &Sender{dialer: gomail.NewDialer(host, 465, username, password)}
+func NewSender(host string, port int, username string, password string, from string) *Sender {
+	return &Sender{from: from, dialer: gomail.NewDialer(host, port, username, password)}
 }
